@@ -1,5 +1,5 @@
 var discord = require("Discord.js")
-const token = "NjM5NjE5OTUzNDcyODMxNDg5.Xbt7YQ.xYwTlD4xLbLW90bZDwNAL7R9-38";
+const token = "NjM5NjE5OTUzNDcyODMxNDg5.XbuBsQ.a72lHICKFDUY54-ON2OF-QzvelQ";
 
 const client = new discord.Client();
 
@@ -144,10 +144,6 @@ client.on("message", message => {
     message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
 
   }
-
-  
-
-
 });
 
 client.login(token);
