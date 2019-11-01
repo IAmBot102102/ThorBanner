@@ -1,5 +1,8 @@
-require("Discord.js")
+var discord = require("Discord.js")
 const token = "NjM5NjE5OTUzNDcyODMxNDg5.Xbt7YQ.xYwTlD4xLbLW90bZDwNAL7R9-38";
+
+const client = new discord.Client();
+
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
@@ -7,24 +10,12 @@ client.on("ready", () => {
 
 
 
-client.on("guildCreate", guild => {
-  console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
-  client.user.setActivity(`Serving ${client.guilds.size} servers`);
-});
-
-
-
-client.on("guildDelete", guild => {
-    console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
-    client.user.setActivity(`Serving ${client.guilds.size} servers`);
-
-});
 
 
 
 
 
-client.on("message", async message => {
+client.on("message", message => {
   if(message.author.bot) return;
 
   
@@ -51,17 +42,6 @@ client.on("message", async message => {
 
   
     var command = message.content;
-  if(command === ">ping" || command === "!ping" ) {
-
-    // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
-
-    // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
-
-    const m = await message.channel.send("Ping?");
-
-    m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
-
-  }
 
   
 
@@ -115,7 +95,7 @@ client.on("message", async message => {
 
     // Now, time for a swift kick in the nuts!
 
-    await member.kick(reason)
+    member.kick()
 
       .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
 
@@ -157,7 +137,7 @@ client.on("message", async message => {
 
     
 
-    await member.ban(reason)
+    member.ban("Nou")
 
       .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
 
@@ -167,34 +147,7 @@ client.on("message", async message => {
 
   
 
-  if(command === "purge") {
-
-    // This command removes all messages from all users in the channel, up to 100.
-
-    
-
-    // get the delete count, as an actual number.
-
-    const deleteCount = parseInt(args[0], 10);
-
-    
-
-    // Ooooh nice, combined conditions. <3
-
-    if(!deleteCount || deleteCount < 2 || deleteCount > 100)
-
-      return message.reply("Please provide a number between 2 and 100 for the number of messages to delete");
-
-    
-
-    // So we get our messages, and delete them. Simple enough, right?
-
-    const fetched = await message.channel.fetchMessages({limit: deleteCount});
-
-    message.channel.bulkDelete(fetched)
-
-      .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
-
-  }
 
 });
+
+client.login(token);
