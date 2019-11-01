@@ -1,25 +1,17 @@
-var discord = require("Discord.js")
+var Discord = require("Discord.io");
 const token = "NjM5NjE5OTUzNDcyODMxNDg5.XbuBsQ.a72lHICKFDUY54-ON2OF-QzvelQ";
 
-const client = new discord.Client();
+const client = new Discord.Client({
+    token: token,
+    autorun: true
+ });
 
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
-
-
-
-
-
-
-
-
 client.on("message", message => {
   if(message.author.bot) return;
-
-  
-
   // Also good practice to ignore any message that does not start with our prefix, 
 
   // which is set in the configuration file.
@@ -53,7 +45,7 @@ client.on("message", message => {
 
       return message.reply("Please mention a valid member of this server");
     
-      message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: I said so! :wave:`);
+    message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: I said so! :wave:`);
   }
 
   if(command.startsWith("!kick")) {
@@ -145,5 +137,3 @@ client.on("message", message => {
 
   }
 });
-
-client.login(token);
